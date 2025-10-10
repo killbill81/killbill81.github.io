@@ -11,6 +11,8 @@
             background-color: #f3f4f6;
         }
     </style>
+  <script type="module" crossorigin src="/assets/login-D1Cwqw0d.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/firebase-config-26u3hbUh.js">
 </head>
 <body class="flex items-center justify-center min-h-screen">
 
@@ -30,67 +32,6 @@
     <!-- FirebaseUI JS -->
     <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Utilise la configuration du nouveau projet
-            const firebaseConfig = {
-                apiKey: "AIzaSyAf2Fmg5SBU6zpZ9r-VP_eTF49r-e1go7Q",
-                authDomain: "gustoplan-dev.firebaseapp.com",
-                projectId: "gustoplan-dev",
-                storageBucket: "gustoplan-dev.firebasestorage.app",
-                messagingSenderId: "554162135180",
-                appId: "1:554162135180:web:f5addf322a0977ffe31ba9"
-            };
-
-            // Initialise Firebase avec la syntaxe de compatibilité
-            firebase.initializeApp(firebaseConfig);
-
-            const ui = new firebaseui.auth.AuthUI(firebase.auth());
-
-            const uiConfig = {
-                callbacks: {
-                    signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-                        const user = authResult.user;
-                        if (user) {
-                            const db = firebase.firestore();
-                            const userRef = db.collection('users').doc(user.uid);
-                            userRef.set({
-                                uid: user.uid,
-                                displayName: user.displayName,
-                                email: user.email,
-                                photoURL: user.photoURL,
-                                displayName_lowercase: user.displayName ? user.displayName.toLowerCase() : ''
-                            }, { merge: true }).then(() => {
-                                window.location.assign('/');
-                            }).catch(error => {
-                                console.error("Error writing user to Firestore: ", error);
-                                // Even if there's an error, we still redirect
-                                window.location.assign('/');
-                            });
-                        }
-                        return false; // We handle the redirect manually
-                    },
-                    uiShown: function() {
-                        document.getElementById('loader').style.display = 'none';
-                    }
-                },
-                credentialHelper: firebaseui.auth.CredentialHelper.NONE,
-                signInFlow: 'popup',
-                signInOptions: [
-                    firebase.auth.EmailAuthProvider.PROVIDER_ID,
-                    {
-                      provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-                      customParameters: {
-                        prompt: 'select_account'
-                      }
-                    }
-                ]
-            };
-
-            // Lance le widget FirebaseUI
-            ui.start('#firebaseui-auth-container', uiConfig);
-        });
-    </script>
 
 </body>
 </html>
