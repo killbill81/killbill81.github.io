@@ -15,8 +15,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-  <script type="module" crossorigin src="/assets/main-CHGgDZ-5.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/firebase-config-D04zk_Ph.js">
+  <script type="module" crossorigin src="/assets/main-DnQG0WQY.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/firebase-config-DS3K-luN.js">
   <link rel="stylesheet" crossorigin href="/assets/main-1fl9AIOP.css">
 </head>
 <body class="bg-body-bg">
@@ -447,6 +447,19 @@
             </div>
             <div class="flex justify-end mt-6">
                 <button id="unit-modal-cancel" class="btn btn-ghost">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Plan History Modal -->
+    <div id="plan-history-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-[100] hidden" role="dialog">
+        <div class="bg-white rounded-xl p-6 w-11/12 max-w-2xl relative max-h-[80vh] flex flex-col">
+            <button id="close-plan-history-modal" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600" aria-label="Fermer">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <h3 class="text-lg font-bold mb-4">Historique des modifications</h3>
+            <div id="plan-history-list" class="flex-grow overflow-y-auto border-t pt-4">
+                <!-- History items will be generated here -->
             </div>
         </div>
     </div>
