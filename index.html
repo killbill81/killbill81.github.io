@@ -15,9 +15,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-  <script type="module" crossorigin src="/assets/main-CHmAcSO8.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/firebase-config-CDPbqvnt.js">
-  <link rel="stylesheet" crossorigin href="/assets/login-DXK05PeN.css">
+  <script type="module" crossorigin src="/assets/main-BFSv4QEH.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/firebase-config-BSjdx3Os.js">
+  <link rel="stylesheet" crossorigin href="/assets/main-DlqHKZ9G.css">
 </head>
 
 <body class="bg-background text-foreground transition-colors duration-200">
@@ -119,29 +119,13 @@
 
                     <span id="user-display-name"
                         class="text-sm font-bold bg-gray-100 text-gray-800 px-3 py-1 rounded-full hidden md:inline-block mr-4 shadow-sm cursor-pointer hover:bg-gray-200 transition-colors"></span>
-                    <!-- Profile Dropdown -->
-                    <div class="relative inline-block text-left">
-                        <div>
-                            <button type="button" id="profile-btn"
-                                class="inline-flex items-center justify-center px-4 py-2 rounded-full text-sm font-medium bg-white text-tomato hover:bg-gray-100 transition-colors shadow-sm"
-                                aria-expanded="true" aria-haspopup="true">
-                                <i class="fas fa-user mr-2"></i> Mon Profil
-                            </button>
-                        </div>
 
-                        <div id="profile-menu"
-                            class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-card text-card-foreground ring-1 ring-black ring-opacity-5 dark:ring-gray-700 focus:outline-none z-50"
-                            role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                            <div class="py-1" role="none">
-                                <a href="#"
-                                    class="text-gray-900 dark:text-white block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
-                                    role="menuitem" tabindex="-1" id="profile-details-link">Détail du profil</a>
-                                <a href="#"
-                                    class="text-gray-900 dark:text-white block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
-                                    role="menuitem" tabindex="-1" id="settings-link">Paramètres</a>
-                            </div>
-                        </div>
-                    </div>
+                    <button id="header-settings-btn"
+                        class="w-10 h-10 flex items-center justify-center bg-white text-gray-600 rounded-full hover:bg-gray-100 shadow-sm transition-colors mr-2"
+                        aria-label="Paramètres">
+                        <i class="fas fa-cog"></i>
+                    </button>
+
                     <button id="logout-btn"
                         class="inline-flex items-center justify-center px-4 py-2 rounded-full text-sm font-medium bg-red-500 text-white hover:bg-red-600 transition-colors shadow-sm">
                         <i class="fas fa-sign-out-alt mr-2"></i> Déconnexion
@@ -367,6 +351,13 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Footer -->
+            <div class="mt-6 flex justify-end">
+                <button id="save-settings-btn" class="btn btn-primary px-6">
+                    <i class="fas fa-save mr-2"></i> Sauver
+                </button>
+            </div>
         </div>
     </div>
 
@@ -386,12 +377,12 @@
                 aria-label="Fermer">
                 <i class="fas fa-times text-xl"></i>
             </button>
-            <h3 class="text-lg font-bold mb-4">Créer un nouveau plan</h3>
+            <h3 class="text-lg font-bold mb-4">Créer un nouveau menu</h3>
             <form id="create-plan-form">
                 <div class="space-y-4">
                     <div>
                         <label for="plan-name" class="block text-sm font-medium text-muted-foreground">Nom du
-                            plan</label>
+                            menu</label>
                         <input type="text" id="plan-name"
                             class="mt-1 block w-full rounded-md bg-input border-input text-foreground shadow-sm focus:ring-2 focus:ring-ring focus:border-ring focus:border-tomato focus:ring-tomato"
                             required>
@@ -414,11 +405,11 @@
                 aria-label="Fermer">
                 <i class="fas fa-times text-xl"></i>
             </button>
-            <h3 class="text-lg font-bold mb-4">Renommer le plan</h3>
+            <h3 class="text-lg font-bold mb-4">Renommer le menu</h3>
             <form id="rename-plan-form">
                 <div>
                     <label for="new-plan-name" class="block text-sm font-medium text-muted-foreground">Nouveau nom du
-                        plan</label>
+                        menu</label>
                     <input type="text" id="new-plan-name"
                         class="mt-1 block w-full rounded-md bg-input border-input text-foreground shadow-sm focus:ring-2 focus:ring-ring focus:border-ring focus:border-tomato focus:ring-tomato"
                         required>
@@ -442,6 +433,121 @@
             <div class="flex justify-center space-x-4">
                 <button id="cancel-delete-btn" class="btn btn-ghost">Annuler</button>
                 <button id="confirm-delete-btn" class="btn bg-red-500 text-white hover:bg-red-600">Supprimer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seasonal List Generator Modal -->
+    <div id="seasonal-list-modal"
+        class="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-[100] hidden">
+        <div
+            class="bg-card text-card-foreground border border-border rounded-xl p-6 w-11/12 max-w-lg relative max-h-[90vh] overflow-y-auto">
+            <button id="close-seasonal-modal" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
+                aria-label="Fermer">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <h3 class="text-lg font-bold mb-4">Générer une liste de saison</h3>
+
+            <div class="space-y-4">
+                <!-- Step 1: Season -->
+                <!-- Step 1: Mode & Selection -->
+                <div>
+                    <div class="flex space-x-4 mb-4 border-b pb-2">
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="gen-mode" value="season"
+                                class="form-radio text-tomato focus:ring-tomato" checked>
+                            <span class="ml-2 text-sm font-medium text-gray-700">Par Saison</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="gen-mode" value="month"
+                                class="form-radio text-tomato focus:ring-tomato">
+                            <span class="ml-2 text-sm font-medium text-gray-700">Par Mois</span>
+                        </label>
+                    </div>
+
+                    <div id="gen-season-selector">
+                        <label class="block text-sm font-medium text-muted-foreground mb-2">Choisir la saison</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="gen-season" value="Printemps" class="peer sr-only">
+                                <div
+                                    class="p-3 rounded-lg border text-center peer-checked:bg-green-100 peer-checked:border-green-500 hover:bg-gray-50">
+                                    <span class="block text-2xl">🌸</span>
+                                    <span class="text-sm font-medium">Printemps</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="gen-season" value="Eté" class="peer sr-only">
+                                <div
+                                    class="p-3 rounded-lg border text-center peer-checked:bg-yellow-100 peer-checked:border-yellow-500 hover:bg-gray-50">
+                                    <span class="block text-2xl">☀️</span>
+                                    <span class="text-sm font-medium">Eté</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="gen-season" value="Automne" class="peer sr-only">
+                                <div
+                                    class="p-3 rounded-lg border text-center peer-checked:bg-orange-100 peer-checked:border-orange-500 hover:bg-gray-50">
+                                    <span class="block text-2xl">🍂</span>
+                                    <span class="text-sm font-medium">Automne</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="gen-season" value="Hiver" class="peer sr-only">
+                                <div
+                                    class="p-3 rounded-lg border text-center peer-checked:bg-blue-100 peer-checked:border-blue-500 hover:bg-gray-50">
+                                    <span class="block text-2xl">❄️</span>
+                                    <span class="text-sm font-medium">Hiver</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="gen-month-selector" class="hidden">
+                        <label for="gen-month" class="block text-sm font-medium text-muted-foreground mb-2">Choisir le
+                            mois</label>
+                        <select id="gen-month"
+                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-tomato focus:ring-tomato">
+                            <option value="Janvier">Janvier</option>
+                            <option value="Février">Février</option>
+                            <option value="Mars">Mars</option>
+                            <option value="Avril">Avril</option>
+                            <option value="Mai">Mai</option>
+                            <option value="Juin">Juin</option>
+                            <option value="Juillet">Juillet</option>
+                            <option value="Août">Août</option>
+                            <option value="Septembre">Septembre</option>
+                            <option value="Octobre">Octobre</option>
+                            <option value="Novembre">Novembre</option>
+                            <option value="Décembre">Décembre</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Step 2: Category -->
+                <div>
+                    <label for="gen-category" class="block text-sm font-medium text-muted-foreground mb-2">2. Choisir la
+                        catégorie</label>
+                    <select id="gen-category"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-tomato focus:ring-tomato">
+                        <!-- Categories will be loaded here -->
+                    </select>
+                </div>
+
+                <!-- Step 3: Preview -->
+                <div id="gen-preview-section" class="hidden">
+                    <label class="block text-sm font-medium text-muted-foreground mb-2">3. Sélectionner les
+                        ingrédients</label>
+                    <div id="gen-preview-list"
+                        class="max-h-48 overflow-y-auto border rounded-md p-2 space-y-2 bg-gray-50">
+                        <!-- Checkboxes will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-4 mt-6">
+                <button id="gen-preview-btn" class="btn btn-secondary">Voir les ingrédients</button>
+                <button id="gen-create-btn" class="btn btn-primary hidden">Créer la liste</button>
             </div>
         </div>
     </div>
@@ -555,6 +661,142 @@
                             <option>Difficile</option>
                         </select>
                     </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-muted-foreground mb-1">Saisonnalité</label>
+                        <div class="grid grid-cols-2 gap-4 mb-2">
+                            <!-- Printemps -->
+                            <div class="border border-green-200 rounded-md p-3 bg-green-50">
+                                <label class="flex items-center space-x-2 cursor-pointer mb-2 font-medium">
+                                    <input type="checkbox" id="recipe-season-printemps" value="Printemps"
+                                        class="form-checkbox h-4 w-4 text-green-600 focus:ring-green-500 recipe-season-checkbox"
+                                        data-months="avril,mai,juin">
+                                    <span class="text-sm text-green-800">Printemps 🌸</span>
+                                </label>
+                                <div class="ml-6 space-y-1 flex flex-col">
+                                    <label
+                                        class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-green-700">
+                                        <input type="checkbox" id="recipe-month-avril" value="Avril"
+                                            class="form-checkbox h-3 w-3 text-green-500 recipe-month-checkbox rounded-sm"
+                                            data-season="Printemps">
+                                        <span>Avril</span>
+                                    </label>
+                                    <label
+                                        class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-green-700">
+                                        <input type="checkbox" id="recipe-month-mai" value="Mai"
+                                            class="form-checkbox h-3 w-3 text-green-500 recipe-month-checkbox rounded-sm"
+                                            data-season="Printemps">
+                                        <span>Mai</span>
+                                    </label>
+                                    <label
+                                        class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-green-700">
+                                        <input type="checkbox" id="recipe-month-juin" value="Juin"
+                                            class="form-checkbox h-3 w-3 text-green-500 recipe-month-checkbox rounded-sm"
+                                            data-season="Printemps">
+                                        <span>Juin</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Eté -->
+                            <div class="border border-yellow-200 rounded-md p-3 bg-yellow-50">
+                                <label class="flex items-center space-x-2 cursor-pointer mb-2 font-medium">
+                                    <input type="checkbox" id="recipe-season-ete" value="Eté"
+                                        class="form-checkbox h-4 w-4 text-yellow-600 focus:ring-yellow-500 recipe-season-checkbox"
+                                        data-months="juillet,aout,septembre">
+                                    <span class="text-sm text-yellow-800">Eté ☀️</span>
+                                </label>
+                                <div class="ml-6 space-y-1 flex flex-col">
+                                    <label
+                                        class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-yellow-700">
+                                        <input type="checkbox" id="recipe-month-juillet" value="Juillet"
+                                            class="form-checkbox h-3 w-3 text-yellow-500 recipe-month-checkbox rounded-sm"
+                                            data-season="Eté">
+                                        <span>Juillet</span>
+                                    </label>
+                                    <label
+                                        class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-yellow-700">
+                                        <input type="checkbox" id="recipe-month-aout" value="Août"
+                                            class="form-checkbox h-3 w-3 text-yellow-500 recipe-month-checkbox rounded-sm"
+                                            data-season="Eté">
+                                        <span>Août</span>
+                                    </label>
+                                    <label
+                                        class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-yellow-700">
+                                        <input type="checkbox" id="recipe-month-septembre" value="Septembre"
+                                            class="form-checkbox h-3 w-3 text-yellow-500 recipe-month-checkbox rounded-sm"
+                                            data-season="Eté">
+                                        <span>Septembre</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Automne -->
+                            <div class="border border-orange-200 rounded-md p-3 bg-orange-50">
+                                <label class="flex items-center space-x-2 cursor-pointer mb-2 font-medium">
+                                    <input type="checkbox" id="recipe-season-automne" value="Automne"
+                                        class="form-checkbox h-4 w-4 text-orange-600 focus:ring-orange-500 recipe-season-checkbox"
+                                        data-months="octobre,novembre,decembre">
+                                    <span class="text-sm text-orange-800">Automne 🍂</span>
+                                </label>
+                                <div class="ml-6 space-y-1 flex flex-col">
+                                    <label
+                                        class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-orange-700">
+                                        <input type="checkbox" id="recipe-month-octobre" value="Octobre"
+                                            class="form-checkbox h-3 w-3 text-orange-500 recipe-month-checkbox rounded-sm"
+                                            data-season="Automne">
+                                        <span>Octobre</span>
+                                    </label>
+                                    <label
+                                        class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-orange-700">
+                                        <input type="checkbox" id="recipe-month-novembre" value="Novembre"
+                                            class="form-checkbox h-3 w-3 text-orange-500 recipe-month-checkbox rounded-sm"
+                                            data-season="Automne">
+                                        <span>Novembre</span>
+                                    </label>
+                                    <label
+                                        class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-orange-700">
+                                        <input type="checkbox" id="recipe-month-decembre" value="Décembre"
+                                            class="form-checkbox h-3 w-3 text-orange-500 recipe-month-checkbox rounded-sm"
+                                            data-season="Automne">
+                                        <span>Décembre</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Hiver -->
+                            <div class="border border-blue-200 rounded-md p-3 bg-blue-50">
+                                <label class="flex items-center space-x-2 cursor-pointer mb-2 font-medium">
+                                    <input type="checkbox" id="recipe-season-hiver" value="Hiver"
+                                        class="form-checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 recipe-season-checkbox"
+                                        data-months="janvier,fevrier,mars">
+                                    <span class="text-sm text-blue-800">Hiver ❄️</span>
+                                </label>
+                                <div class="ml-6 space-y-1 flex flex-col">
+                                    <label
+                                        class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-blue-700">
+                                        <input type="checkbox" id="recipe-month-janvier" value="Janvier"
+                                            class="form-checkbox h-3 w-3 text-blue-500 recipe-month-checkbox rounded-sm"
+                                            data-season="Hiver">
+                                        <span>Janvier</span>
+                                    </label>
+                                    <label
+                                        class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-blue-700">
+                                        <input type="checkbox" id="recipe-month-fevrier" value="Février"
+                                            class="form-checkbox h-3 w-3 text-blue-500 recipe-month-checkbox rounded-sm"
+                                            data-season="Hiver">
+                                        <span>Février</span>
+                                    </label>
+                                    <label
+                                        class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-blue-700">
+                                        <input type="checkbox" id="recipe-month-mars" value="Mars"
+                                            class="form-checkbox h-3 w-3 text-blue-500 recipe-month-checkbox rounded-sm"
+                                            data-season="Hiver">
+                                        <span>Mars</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Ingredients Section -->
@@ -634,7 +876,9 @@
                 <i class="fas fa-times text-xl"></i>
             </button>
             <h3 class="text-lg font-bold mb-4 text-gray-900 dark:text-white">Paramètres</h3>
-            <div class="space-y-4">
+            <div class="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
+
+                <!-- Dark Mode -->
                 <div class="flex items-center justify-between p-3 border rounded-lg dark:border-gray-700">
                     <span class="font-medium text-gray-900 dark:text-gray-300">Mode Sombre</span>
                     <label for="dark-mode-toggle" class="relative inline-flex items-center cursor-pointer">
@@ -644,6 +888,83 @@
                         </div>
                     </label>
                 </div>
+
+                <!-- Seasonality Section -->
+                <div class="border-t pt-4 dark:border-gray-700">
+                    <h4 class="text-md font-bold text-gray-900 dark:text-white mb-2 flex items-center">
+                        <span class="mr-2">🌱</span> Saisonnalité Intelligente
+                    </h4>
+
+                    <!-- Mode -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Mode de
+                            saison</label>
+                        <div class="flex flex-col space-y-2">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="season-mode" value="auto" class="form-radio text-tomato">
+                                <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Automatique (Date du
+                                    jour)</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="season-mode" value="forced" class="form-radio text-tomato">
+                                <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Forcée</span>
+                            </label>
+                            <div id="forced-season-selector" class="ml-6 hidden">
+                                <select id="forced-season-select"
+                                    class="form-select block w-full mt-1 sm:text-sm rounded-md border-gray-300 shadow-sm focus:border-tomato focus:ring focus:ring-tomato focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600">
+                                    <option value="Printemps">🌸 Printemps</option>
+                                    <option value="Eté">☀️ Eté</option>
+                                    <option value="Automne">🍂 Automne</option>
+                                    <option value="Hiver">❄️ Hiver</option>
+                                </select>
+                            </div>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="season-mode" value="disabled" class="form-radio text-tomato">
+                                <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Désactivée</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Hors Saison Behavior -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Produits hors
+                            saison</label>
+                        <select id="off-season-behavior"
+                            class="form-select block w-full mt-1 sm:text-sm rounded-md border-gray-300 shadow-sm focus:border-tomato focus:ring focus:ring-tomato focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600">
+                            <option value="last">Afficher en dernier (défaut)</option>
+                            <option value="dim">Afficher normalement (grisé)</option>
+                            <option value="hide">Masquer complètement</option>
+                        </select>
+                    </div>
+
+                    <!-- Recipe Rules -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Recettes</label>
+                        <div class="space-y-2">
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="rule-prioritize-seasonal"
+                                    class="form-checkbox text-tomato rounded">
+                                <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Prioriser les recettes de
+                                    saison</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="rule-warn-off-season"
+                                    class="form-checkbox text-tomato rounded">
+                                <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Avertir si hors
+                                    saison</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="mt-6 flex justify-end pt-4 border-t dark:border-gray-700">
+                <button id="save-settings-btn"
+                    class="btn btn-primary px-6 py-2 rounded-lg font-medium shadow-sm transition-transform hover:scale-105">
+                    <i class="fas fa-save mr-2"></i> Sauver
+                </button>
             </div>
         </div>
     </div>
@@ -682,6 +1003,185 @@
         </div>
     </div>
 
+
+    <!-- Ingredient Form Modal (Moved from Router) -->
+    <div id="ingredient-form-modal"
+        class="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-[100] hidden">
+        <div class="bg-white rounded-xl p-6 w-11/12 max-w-md relative">
+            <button id="close-ingredient-modal"
+                class="absolute top-4 right-4 text-gray-400 hover:text-muted-foreground"><i
+                    class="fas fa-times text-xl"></i></button>
+            <h3 id="ingredient-modal-title" class="text-lg font-bold mb-4">Ajouter un Ingrédient</h3>
+            <form id="ingredient-form" class="space-y-4">
+                <input type="hidden" id="ingredient-id">
+                <div>
+                    <label for="ingredient-name" class="block text-sm font-medium text-gray-700">Nom</label>
+                    <input type="text" id="ingredient-name"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                </div>
+                <div>
+                    <label for="ingredient-unit" class="block text-sm font-medium text-gray-700">Unité par
+                        défaut</label>
+                    <select id="ingredient-unit"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></select>
+                </div>
+                <div>
+                    <label for="ingredient-category" class="block text-sm font-medium text-gray-700">Catégorie</label>
+                    <select id="ingredient-category" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                        required></select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Saisonnalité (Optionnel)</label>
+                    <!-- Seasons -->
+                    <div class="grid grid-cols-2 gap-4 mb-2">
+                        <!-- Printemps -->
+                        <div class="border border-green-200 rounded-md p-3 bg-green-50">
+                            <label class="flex items-center space-x-2 cursor-pointer mb-2 font-medium">
+                                <input type="checkbox" id="season-printemps" value="Printemps"
+                                    class="form-checkbox h-4 w-4 text-green-600 focus:ring-green-500 season-checkbox"
+                                    data-months="avril,mai,juin">
+                                <span class="text-sm text-green-800">Printemps 🌸</span>
+                            </label>
+                            <div class="ml-6 space-y-1 flex flex-col">
+                                <label
+                                    class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-green-700">
+                                    <input type="checkbox" id="month-avril" value="Avril"
+                                        class="form-checkbox h-3 w-3 text-green-500 month-checkbox rounded-sm"
+                                        data-season="Printemps">
+                                    <span>Avril</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-green-700">
+                                    <input type="checkbox" id="month-mai" value="Mai"
+                                        class="form-checkbox h-3 w-3 text-green-500 month-checkbox rounded-sm"
+                                        data-season="Printemps">
+                                    <span>Mai</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-green-700">
+                                    <input type="checkbox" id="month-juin" value="Juin"
+                                        class="form-checkbox h-3 w-3 text-green-500 month-checkbox rounded-sm"
+                                        data-season="Printemps">
+                                    <span>Juin</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Eté -->
+                        <div class="border border-yellow-200 rounded-md p-3 bg-yellow-50">
+                            <label class="flex items-center space-x-2 cursor-pointer mb-2 font-medium">
+                                <input type="checkbox" id="season-ete" value="Eté"
+                                    class="form-checkbox h-4 w-4 text-yellow-600 focus:ring-yellow-500 season-checkbox"
+                                    data-months="juillet,aout,septembre">
+                                <span class="text-sm text-yellow-800">Eté ☀️</span>
+                            </label>
+                            <div class="ml-6 space-y-1 flex flex-col">
+                                <label
+                                    class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-yellow-700">
+                                    <input type="checkbox" id="month-juillet" value="Juillet"
+                                        class="form-checkbox h-3 w-3 text-yellow-500 month-checkbox rounded-sm"
+                                        data-season="Eté">
+                                    <span>Juillet</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-yellow-700">
+                                    <input type="checkbox" id="month-aout" value="Août"
+                                        class="form-checkbox h-3 w-3 text-yellow-500 month-checkbox rounded-sm"
+                                        data-season="Eté">
+                                    <span>Août</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-yellow-700">
+                                    <input type="checkbox" id="month-septembre" value="Septembre"
+                                        class="form-checkbox h-3 w-3 text-yellow-500 month-checkbox rounded-sm"
+                                        data-season="Eté">
+                                    <span>Septembre</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Automne -->
+                        <div class="border border-orange-200 rounded-md p-3 bg-orange-50">
+                            <label class="flex items-center space-x-2 cursor-pointer mb-2 font-medium">
+                                <input type="checkbox" id="season-automne" value="Automne"
+                                    class="form-checkbox h-4 w-4 text-orange-600 focus:ring-orange-500 season-checkbox"
+                                    data-months="octobre,novembre,decembre">
+                                <span class="text-sm text-orange-800">Automne 🍂</span>
+                            </label>
+                            <div class="ml-6 space-y-1 flex flex-col">
+                                <label
+                                    class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-orange-700">
+                                    <input type="checkbox" id="month-octobre" value="Octobre"
+                                        class="form-checkbox h-3 w-3 text-orange-500 month-checkbox rounded-sm"
+                                        data-season="Automne">
+                                    <span>Octobre</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-orange-700">
+                                    <input type="checkbox" id="month-novembre" value="Novembre"
+                                        class="form-checkbox h-3 w-3 text-orange-500 month-checkbox rounded-sm"
+                                        data-season="Automne">
+                                    <span>Novembre</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-orange-700">
+                                    <input type="checkbox" id="month-decembre" value="Décembre"
+                                        class="form-checkbox h-3 w-3 text-orange-500 month-checkbox rounded-sm"
+                                        data-season="Automne">
+                                    <span>Décembre</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Hiver -->
+                        <div class="border border-blue-200 rounded-md p-3 bg-blue-50">
+                            <label class="flex items-center space-x-2 cursor-pointer mb-2 font-medium">
+                                <input type="checkbox" id="season-hiver" value="Hiver"
+                                    class="form-checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 season-checkbox"
+                                    data-months="janvier,fevrier,mars">
+                                <span class="text-sm text-blue-800">Hiver ❄️</span>
+                            </label>
+                            <div class="ml-6 space-y-1 flex flex-col">
+                                <label
+                                    class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-blue-700">
+                                    <input type="checkbox" id="month-janvier" value="Janvier"
+                                        class="form-checkbox h-3 w-3 text-blue-500 month-checkbox rounded-sm"
+                                        data-season="Hiver">
+                                    <span>Janvier</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-blue-700">
+                                    <input type="checkbox" id="month-fevrier" value="Février"
+                                        class="form-checkbox h-3 w-3 text-blue-500 month-checkbox rounded-sm"
+                                        data-season="Hiver">
+                                    <span>Février</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 cursor-pointer text-xs text-gray-700 hover:text-blue-700">
+                                    <input type="checkbox" id="month-mars" value="Mars"
+                                        class="form-checkbox h-3 w-3 text-blue-500 month-checkbox rounded-sm"
+                                        data-season="Hiver">
+                                    <span>Mars</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="ingredient-image-url" class="block text-sm font-medium text-gray-700">URL de
+                        l'image</label>
+                    <input type="text" id="ingredient-image-url"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                        placeholder="Laisser vide pour une image aléatoire">
+                </div>
+                <div class="flex justify-end space-x-4 pt-2">
+                    <button type="button" id="cancel-ingredient-btn"
+                        class="text-gray-700 hover:bg-gray-100 px-4 py-2 rounded-md">Annuler</button>
+                    <button type="submit" id="save-ingredient-btn" class="btn btn-primary">Sauvegarder</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Unit Selection Modal -->
     <div id="unit-select-modal"
