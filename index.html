@@ -16,9 +16,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
-  <script type="module" crossorigin src="/assets/main-DOZ5ZINl.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/firebase-config-CPJ13vib.js">
-  <link rel="stylesheet" crossorigin href="/assets/firebase-config-DVv8XtdB.css">
+    <link rel="manifest" href="/assets/manifest-X2GYo0pP.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+  <script type="module" crossorigin src="/assets/main-3FHrQZxb.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/firebase-config-DVWBM_53.js">
+  <link rel="stylesheet" crossorigin href="/assets/firebase-config-X9jPWnzj.css">
 </head>
 
 <body class="bg-background text-foreground transition-colors duration-200">
